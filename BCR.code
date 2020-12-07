@@ -1,0 +1,25 @@
+## This program calculates benefit cost ratio, which is a method of cost benefit analysis 
+bcr <- function(){
+table_bcr <- data.frame( Cost = as.double(), Benefit = as.double(), Rate = as.double(),
+No_of_year = as.double(), Discounted_cost = as.double(), 
+Discounted_benefit = as.double())
+BCR = 0
+table_bcr = edit(table_bcr)
+
+n1 =length(table_bcr$Cost); n2 = length(table_bcr$Benefit)
+
+for (n in 1:n1)
+	{table_bcr$Discounted_cost[n] <- table_bcr$Cost[n]/(1+(table_bcr$Rate[n]/100))^table_bcr$No_of_year[n]; table_bcr <<-table_bcr}
+for (n in 1:n2)
+
+	{table_bcr$Discounted_benefit[n] <- table_bcr$Benefit[n]/(1+(table_bcr$Rate[n]/100))^table_bcr$No_of_year[n]; table_bcr <<- table_bcr}
+
+
+BCR = sum(table_bcr$Discounted_benefit)/sum(table_bcr$Discounted_cost)
+print(table_bcr)
+print(signif(BCR,2))
+if (BCR == 1 || BCR > 1) {cat ("Project should be allowed to proceed\nNote: when BCR = 1, costs equal the benefits, which means 
+the project should be allowed to proceed,but with little viability.\nWhen NCR > 1, the benefits exceed the costs, and the project should be allowed to proceed.")}
+else  cat("BCR < 1 and in economic terms, the costs exceed the benefits. Solely on this criterion,the project should not proceed.")
+}
+
